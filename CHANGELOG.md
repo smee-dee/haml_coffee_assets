@@ -6,6 +6,12 @@ Please have a look at the [Haml Coffee Changelog](https://github.com/netzpirat/h
 
 - Update to Haml-Coffee 1.13.6
 
+## 2.0.0 - September 08, 2016
+
+- Dropping support for rails 3.2
+- [#152][]: Templates not being found
+
+
 ## 1.16.2 - February 25, 2016
 
 - Fixing compatibility with older versions of rails.
