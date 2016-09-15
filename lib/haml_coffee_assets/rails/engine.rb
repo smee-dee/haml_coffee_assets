@@ -92,17 +92,23 @@ module HamlCoffeeAssets
 
         # Register Tilt template (for Sprockets)
         configure_assets(app) do |env|
-          # env.register_transformer '.hamlc', ::HamlCoffeeAssets::Tilt::TemplateHandler
-          if env.respond_to?(:register_transformer)
-            env.register_mime_type 'text/javascript', extensions: ['.hamlc'], charset: :javascript
-            env.register_preprocessor 'text/javascript', ::HamlCoffeeAssets::Tilt::TemplateHandler
-          end
+          env.register_engine '.hamlc', ::HamlCoffeeAssets::Tilt::TemplateHandler
+          # TODO: Create a preprocesor or transformer to turn off this warning
+          # DEPRECATION WARNING: Sprockets method `register_engine` is deprecated.
+          # Please register a mime type using `register_mime_type` then
+          # use `register_compressor` or `register_transformer`.
 
-          if env.respond_to?(:register_engine)
-            args = ['.hamlc', ::HamlCoffeeAssets::Tilt::TemplateHandler]
-            args << { mime_type: 'text/javascript', silence_deprecation: true } if Sprockets::VERSION.start_with?("3")
-            env.register_engine(*args)
-          end
+          # if env.respond_to?(:register_transformer)
+          #   env.register_mime_type 'text/javascript', extensions: ['.hamlc'], charset: :javascript
+          #   # env.register_transformer '.hamlc', ::HamlCoffeeAssets::Tilt::TemplateHandler
+          #   env.register_preprocessor 'text/javascript', ::HamlCoffeeAssets::Tilt::TemplateHandler
+          # end
+          #
+          # if env.respond_to?(:register_engine)
+          #   args = ['.hamlc', ::HamlCoffeeAssets::Tilt::TemplateHandler]
+          #   args << { mime_type: 'text/javascript', silence_deprecation: true } if Sprockets::VERSION.start_with?("3")
+          #   env.register_engine(*args)
+          # end
         end
       end
 

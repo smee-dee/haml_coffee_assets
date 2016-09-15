@@ -30,17 +30,23 @@ module HamlCoffeeAssets
       def prepare
       end
 
-      def self.call(input)
-        filename = input[:filename].to_s.gsub(input[:load_path],"").to_s[1..-1]
-        jst  = !!(filename =~ /\.jst\.hamlc(?:\.|$)/)
-        name = input[:metadata][:name].to_s
-        if HamlCoffeeAssets.config.name_filter && !jst
-          name = filename.to_s.split(".").first
-          name = HamlCoffeeAssets.config.name_filter.call(name)
-        end
-        output ||= HamlCoffeeAssets::Compiler.compile(name, input[:data], !jst)
-        return { data:  output}
-      end
+      # TODO: Create another exntesion with method call to turn off this warning
+      # DEPRECATION WARNING: Sprockets method `register_engine` is deprecated.
+      # Please register a mime type using `register_mime_type` then
+      # use `register_compressor` or `register_transformer`.
+
+      # def self.call(input)
+      #   context  = input[:environment].context_class.new(input)
+      #   filename = input[:filename].to_s.gsub(input[:load_path],"").to_s[1..-1]
+      #   jst  = !!(filename =~ /\.jst\.hamlc(?:\.|$)/)
+      #   name = input[:metadata][:name].to_s
+      #   if HamlCoffeeAssets.config.name_filter && !jst
+      #     name = filename.to_s.split(".").first
+      #     name = HamlCoffeeAssets.config.name_filter.call(name)
+      #   end
+      #   output ||= HamlCoffeeAssets::Compiler.compile(name, input[:data], !jst)
+      #   return { data:  output}
+      # end
 
       # Compile the template.
       #
